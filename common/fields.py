@@ -1,6 +1,6 @@
 from django.db import models
 
-from django_utils.common.utils.date_ops import DateTimeOperations as DtOps
+from common.utils.date_ops import DateTimeOperations as DtOps
 
 
 class DefaultTZDateTimeField(models.DateTimeField):

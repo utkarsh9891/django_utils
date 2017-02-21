@@ -1,7 +1,7 @@
 from common.utils import get_model_display_fields
 from django.db import models
 
-from django_utils.common.fields import DefaultTZDateTimeField
+from common.fields import DefaultTZDateTimeField
 
 
 class MetaDataModel(models.Model):

@@ -5,9 +5,9 @@ from common.external_apis import check_perm_url
 from common.utils import print_exception
 from django.conf import settings
 
-from django_utils.common.utils.vars import forbidden, failure, success
+from common.utils.vars import forbidden, failure, success
 
-logger = logging.getLogger('cerebro.request')
+logger = logging.getLogger('django_utils.request')
 
 
 class EnableACLMixin:

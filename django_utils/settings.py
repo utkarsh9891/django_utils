@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from . import get_var
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,11 +46,12 @@ CUSTOM_APPS = [
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'common.logging.middleware.LoggingMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -74,33 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_utils.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -119,3 +104,104 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Logging Configuration
+LOGGING_LOG_LEVEL = get_var('LOGGING_LOG_LEVEL', 'DEBUG')
+LOGGING_LOGS_ROOT = get_var('LOGGING_LOGS_ROOT', '/tmp/django_logs/')
+
+if not os.path.exists(LOGGING_LOGS_ROOT):
+    os.makedirs(LOGGING_LOGS_ROOT)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s in %(funcName)s] %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+        'simple': {
+            'format': '[%(asctime)s] %(levelname)s %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'project_logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': os.path.join(LOGGING_LOGS_ROOT, 'project.log'),
+            'formatter': 'verbose',
+        },
+        'dummy_app_logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': os.path.join(LOGGING_LOGS_ROOT, 'dummy_app.log'),
+            'formatter': 'verbose',
+        },
+        'error_logfile': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': os.path.join(LOGGING_LOGS_ROOT, 'error.log'),
+            'formatter': 'verbose',
+        },
+        'dba_logfile': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'filename': os.path.join(LOGGING_LOGS_ROOT, 'dba.log'),
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': False,
+        },
+        'null': {
+            'level': 'ERROR',
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'common': {
+            'handlers': ['project_logfile', 'error_logfile', 'console'],
+            'level': LOGGING_LOG_LEVEL,
+            'propagate': False,
+        },
+        'project': {
+            'handlers': ['project_logfile', 'error_logfile', 'console'],
+            'level': LOGGING_LOG_LEVEL,
+            'propagate': False,
+        },
+        'dummy_app': {
+            'handlers': ['project_logfile', 'dummy_app_logfile', 'error_logfile', 'console'],
+            'level': LOGGING_LOG_LEVEL,
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['project_logfile', 'error_logfile', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['dba_logfile', 'error_logfile'],
+            'propagate': False,
+            'level': 'DEBUG',
+        },
+    }
+}

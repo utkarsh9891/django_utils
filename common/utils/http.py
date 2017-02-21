@@ -6,8 +6,8 @@ from wsgiref.util import FileWrapper
 import requests
 from django.http import HttpResponse
 
-from django_utils.common.utils import FileOperations as FOps
-from django_utils.common.utils import print_exception
+from common.utils.file_ops import FileOperations as FOps
+from common.utils import print_exception
 
 
 class HttpOperations:
