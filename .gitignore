@@ -94,5 +94,6 @@ ENV/
 .ropeproject
 
 # Added by utkarsh9891
+*.sqlite3
 migrations
 .idea

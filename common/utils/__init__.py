@@ -9,7 +9,7 @@ from decorator import decorator
 from django.conf import settings
 from django.db.models import Q
 
-from django_utils.common.utils.vars import unauthorized
+from common.utils.vars import unauthorized
 from .hr import hr
 
 
