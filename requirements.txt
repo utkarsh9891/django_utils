@@ -1,0 +1,8 @@
+arrow==0.10.0
+boto==2.46.1
+colorama==0.3.7
+decorator==4.0.11
+Django==1.10.5
+djangorestframework==3.5.4
+pytz==2016.10
+requests==2.13.0
