@@ -93,6 +93,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
-
-migrations/
+# Added by utkarsh9891
+migrations
 .idea
