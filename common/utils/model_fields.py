@@ -4,6 +4,10 @@ from common.utils.date_ops import DateTimeOperations as DtOps
 
 
 class DefaultTZDateTimeField(models.DateTimeField):
+    """
+    A datetime field that returns db datetime values in the timezone provided in django settings
+    """
+
     def from_db_value(self, value, expression, connection, context):
         """
         This method is used by django to parse model data to pythonic return data.
@@ -16,6 +20,11 @@ class DefaultTZDateTimeField(models.DateTimeField):
 
 
 class CurrencyField(models.FloatField):
+    """
+    Field to be used to save currency values.
+    All numeric values are rounded off to 2 decimal places before being saved to db
+    """
+
     def get_prep_value(self, value):
         """
         This method is used by django to convert python values to db storage values.
