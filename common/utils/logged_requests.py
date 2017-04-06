@@ -9,6 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class RequestLogger:
+    """
+    Set of functions to log the request sent & response received
+    """
     @classmethod
     def log_request(cls, request_type, url, params=None, data=None, json=None, log_title=None, **kwargs):
         log_message = log_title or ''
