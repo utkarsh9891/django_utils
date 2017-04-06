@@ -26,7 +26,7 @@ Set of utility functions/libraries that can be imported into any python app.
       show_blank_filter = True
       show_null_filter = False
   ```
-* ####`utils.date_ops`
+* #### `utils.date_ops`
   Set of functions for retrieving/constructing date time objects and time ranges. Refer the function documentation for details. Usage as follows:
   ```python
   from common.utils.date_ops import DateTimeOperations as DtOps
@@ -34,7 +34,7 @@ Set of utility functions/libraries that can be imported into any python app.
   print(DtOps.ist_now())
   print(DtOps.get_range_calendar_year())
   ```
-* ####`utils.exception`
+* #### `utils.exception`
   Use `ExceptionLogger` for detailed logging of exceptions inside your code. Usage as follows:
   ```python
   from common.utils.exception import ExceptionLogger
@@ -44,11 +44,11 @@ Set of utility functions/libraries that can be imported into any python app.
   except:
       ExceptionLogger.print_exception()
   ```
-* ####`utils.file_ops`
+* #### `utils.file_ops`
   Set of functions to delete files and create/remove/recreate directories. Usage is self-explanatory.
-* ####`utils.http`
+* #### `utils.http`
   Primarily used for creating django responses with downloadable file objects.
-* ####`utils.logged_requests`
+* #### `utils.logged_requests`
   Python's `requests` library enhanced with extensive logging. This library contains two sets of functions as follows:
   * `LoggedRequests` -- wrapper over the vanilla requests methods. Usage as follows:
     ```python
@@ -69,15 +69,15 @@ Set of utility functions/libraries that can be imported into any python app.
   Custom fields used across django models:
   * `DefaultTZDateTimeField` -- A wrapper over `models.DateTimeField` that converts db value of datetime fields to django setting's timezone.
   * `CurrencyField` -- A wraper over `models.FloatField` that saves and retrieves numbers as 2-decimal precision values for monetary calculations.
-* ####`utils.models`
+* #### `utils.models`
   Contains `MetaDataModel` which has the basic meta data fields that ideally every model object should have.
-* ####`utils.queryset`
+* #### `utils.queryset`
   Contains `QuerysetHelpers`, a set of functions to help create querysets dynamically.
-* ####`utils.s3`
+* #### `utils.s3`
   Set of functions to access amazon s3 buckets & push/pull objects to/from the same.
-* ####`utils.validators`
+* #### `utils.validators`
   Set of functions that I use across my projects for variable validations.
-* ####`utils.vars`
+* #### `utils.vars`
   Set of variables that I use for my personal semantic understandings.
 
 Feel free to use/modify/share the libraries & functions as per your discretion. Happy Coding.
