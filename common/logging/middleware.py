@@ -4,6 +4,8 @@ import time
 from . import message_types
 from .adapters import LoggingAdapter
 
+__all__ = ['LoggingMiddleware', 'ExceptionLoggingMiddleware']
+
 logger = LoggingAdapter(logging.getLogger(__name__))
 
 

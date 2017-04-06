@@ -2,6 +2,8 @@ from django.db import models
 
 from common.utils.model_fields import DefaultTZDateTimeField
 
+__all__ = ['MetaDataModel']
+
 
 class MetaDataModel(models.Model):
     """

@@ -2,6 +2,8 @@ import inspect
 import os
 import shutil
 
+__all__ = ['FileOperations']
+
 
 class FileOperations:
     """

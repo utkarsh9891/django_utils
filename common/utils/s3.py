@@ -5,6 +5,8 @@ import boto
 from boto.s3.key import Key
 from django.conf import settings
 
+__all__ = ['S3Operations']
+
 
 class S3Operations:
     """

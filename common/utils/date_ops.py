@@ -1,6 +1,7 @@
 from datetime import datetime, date
 
 import arrow
+import numpy as np
 import pytz
 from django.utils import timezone
 
@@ -80,3 +81,74 @@ class DateTimeOperations:
         get arrow object of current timestamp in ist format
         """
         return arrow.now(tz=pytz.timezone('Asia/Kolkata'))
+
+    @classmethod
+    def num_weekdays(cls, start, end):
+        """
+        returns number of days b/w start_date & end_date, excluding Sundays
+        """
+        days = np.busday_count(start.date(), end.date(), weekmask='1111110')
+        return int(days)
+
+    @classmethod
+    def get_range_today(cls):
+        """
+        returns the start and end timestamps for current date
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.span('day')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_yesterday(cls):
+        """
+        returns the start and end timestamps for yesterday
+        """
+        yesterday = cls.ist_now_arrow().replace(days=-1)
+        start, end = yesterday.span('day')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_current_week(cls):
+        """
+        returns the start and end timestamps for current week
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.span('week')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_last_week(cls):
+        """
+        returns the start and end timestamps for last week
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.replace(weeks=-1).span('week')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_current_month(cls):
+        """
+        returns the start and end timestamps for current month
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.span('month')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_last_month(cls):
+        """
+        returns the start and end timestamps for last month
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.replace(month=-1).span('month')
+        return start.datetime, end.datetime
+
+    @classmethod
+    def get_range_calendar_year(cls):
+        """
+        returns the start and end timestamps for current calendar year
+        """
+        today = cls.ist_now_arrow()
+        start, end = today.span('year')
+        return start.datetime, end.datetime

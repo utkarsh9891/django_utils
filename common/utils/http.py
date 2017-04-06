@@ -7,7 +7,9 @@ import requests
 from django.http import HttpResponse
 
 from common.utils.file_ops import FileOperations as FOps
-from common.utils import print_exception
+from common.utils.exception import ExceptionLogger
+
+__all__ = ['HttpOperations']
 
 
 class HttpOperations:
@@ -33,7 +35,7 @@ class HttpOperations:
             response['Content-Length'] = os.path.getsize(file_path)
             response['Content-Disposition'] = "attachment; filename={}".format(download_name)
         except:
-            print_exception()
+            ExceptionLogger.print_exception()
             return None
 
         return response
@@ -51,7 +53,7 @@ class HttpOperations:
             if response.status_code == 200:
                 image = BytesIO(response.content)
         except:
-            print_exception()
+            ExceptionLogger.print_exception()
             return None
 
         return image
@@ -74,5 +76,5 @@ class HttpOperations:
 
             return file_path
         except:
-            print_exception()
+            ExceptionLogger.print_exception()
             return None

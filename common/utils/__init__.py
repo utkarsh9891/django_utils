@@ -1,19 +1,8 @@
-import linecache
-import sys
+import inspect
+import logging
 
+from common.utils.exception import ExceptionLogger
 from common.utils.vars import unauthorized
-
-
-# http://stackoverflow.com/a/20264059/2422840
-def print_exception():
-    exc_type, exc_obj, tb = sys.exc_info()
-    f = tb.tb_frame
-    lineno = tb.tb_lineno
-    filename = f.f_code.co_filename
-    linecache.checkcache(filename)
-    line = linecache.getline(filename, lineno, f.f_globals)
-    print('EXCEPTION IN:\nFILE:{}\nLINE No. {}\nLINE:"{}"\nERROR:{}'.format(
-        filename, lineno, line.strip(), exc_obj))
 
 
 def parse_dict(request_dict, params_map):
@@ -63,7 +52,7 @@ def parse_dict(request_dict, params_map):
             elif has_default:
                 result_params[to_name] = param_default
         except:
-            print_exception()
+            ExceptionLogger.print_exception()
             # Invalid data type passed in for parameter value. Skip value assignment
 
     return result_params
@@ -84,3 +73,17 @@ def split_str(string, data_type=str):
         split_string = [data_type(item) for item in split_string]
 
     return split_string
+
+
+def get_caller_file(stack_depth=1):
+    try:
+        return inspect.stack()[stack_depth + 1].filename.replace('{}/'.format(os.getcwd()), '')
+    except:
+        return None
+
+
+def get_caller_logger(stack_depth=1, default_logger=None):
+    caller_file = get_caller_file(stack_depth=stack_depth + 1)
+    if caller_file:
+        return logging.getLogger(caller_file)
+    return default_logger

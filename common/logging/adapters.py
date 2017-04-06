@@ -3,6 +3,8 @@ import logging
 from .builders import MessageBuilder
 from .mixins import LoggingHelperMixin
 
+__all__ = ['MessageAdapter', 'StrictMessageAdapter', 'LoggingAdapter', 'StrictLoggingAdapter']
+
 
 class MessageAdapter(logging.LoggerAdapter):
     def __init__(self, logger, *args, **kwargs):
