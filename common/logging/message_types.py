@@ -2,6 +2,8 @@ from collections import namedtuple
 
 from .builders import MessageBuilder
 
+__all__ = ['SYSTEM_IN', 'SYSTEM_OUT', 'EXCEPTION', 'API_IN_WITH_DATA', 'API_OUT_WITH_DATA', 'API_IN', 'API_OUT']
+
 MESSAGE_TYPE = namedtuple('MESSAGE_TYPE', 'format builder')
 
 MESSAGE_TYPE.__new__.__defaults__ = (MessageBuilder,)

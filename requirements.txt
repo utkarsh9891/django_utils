@@ -5,4 +5,5 @@ decorator==4.0.11
 Django==1.10.5
 djangorestframework==3.5.4
 pytz==2016.10
+numpy==1.12.1
 requests==2.13.0

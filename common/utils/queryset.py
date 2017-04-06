@@ -3,6 +3,8 @@ from operator import __or__ as OR
 
 from django.db.models import Q
 
+__all__ = ['QuerysetHelpers']
+
 
 class QuerysetHelpers:
     """

@@ -2,8 +2,13 @@ from django.contrib.admin import SimpleListFilter
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
+__all__ = ['IsNullBlankFilter']
+
 
 class IsNullBlankFilter(SimpleListFilter):
+    """
+    Adds additional filter to django admin for fields which have null=True and/or blank=True
+    """
     title = 'Target Field'
     parameter_name = 'target_field'
     show_blank_filter = False
