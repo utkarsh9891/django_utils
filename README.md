@@ -65,7 +65,7 @@ Set of utility functions/libraries that can be imported into any python app.
     import requests
     requests.get('http://icanhazip.com', log_title='Demo for LoggedRequests ') # Gives the same result as LoggedRequests.get
     ```
-* ####`utils.model_fields`
+* #### `utils.model_fields`
   Custom fields used across django models:
   * `DefaultTZDateTimeField` -- A wrapper over `models.DateTimeField` that converts db value of datetime fields to django setting's timezone.
   * `CurrencyField` -- A wraper over `models.FloatField` that saves and retrieves numbers as 2-decimal precision values for monetary calculations.
